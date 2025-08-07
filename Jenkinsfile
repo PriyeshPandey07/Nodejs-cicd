@@ -1,22 +1,24 @@
 pipeline {
-    agent { label 'node-agent' }
+    agent { 
+        label 'agent'
+        }
     
     stages{
         stage('Code'){
             steps{
-                git url: 'https://github.com/LondheShubham153/node-todo-cicd.git', branch: 'master' 
+                git url: 'https://github.com/PriyeshPandey07/Nodejs-cicd.git', branch: 'main' 
             }
         }
         stage('Build and Test'){
             steps{
-                sh 'docker build . -t trainwithshubham/node-todo-test:latest'
+                sh 'docker build . -t priyeshpandey07/nodejs-cicd:latest'
             }
         }
         stage('Push'){
             steps{
-                withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
+                withCredentials([usernamePassword(credentialsId: 'docker', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
         	     sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
-                 sh 'docker push trainwithshubham/node-todo-test:latest'
+                 sh 'docker push priyeshpandey07/nodejs-cicd:latest'
                 }
             }
         }
