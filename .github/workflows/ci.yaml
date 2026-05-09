@@ -20,7 +20,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASS }}
 
       - name: Build and push
-        uses: actions/build-push-action@v7
+        uses: docker/build-push-action@v7
         with:
           context: .
           push: true
